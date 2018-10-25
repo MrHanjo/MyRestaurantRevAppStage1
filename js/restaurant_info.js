@@ -48,8 +48,20 @@ initMap = () => {
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
-  });
+  });   document.activeElement.innerText.includes('Sunday'))
 } */
+
+
+
+//This forces the tab to skip the map container as that is not very useful information to those using a screen reader
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 9 && /*document.activeElement.innerText.includes('Sunday')== true*/document.activeElement.innerHTML.includes('map')==true)  {
+    document.querySelector('#reviews-container h2').focus();
+  } else if (event.keyCode === 9 && event.shiftKey && document.activeElement.innerText == 'Mapbox') {
+    document.getElementById('restaurant-container').focus();
+  }
+});
+
 
 /**
  * Get current restaurant from page URL.
@@ -82,16 +94,21 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+  name.tabIndex = '0';
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
+  address.tabIndex = '0';
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.tabIndex = '0';
+  image.alt = restaurant.image_alt;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
+  cuisine.tabIndex = '0';
 
   // fill operating hours
   if (restaurant.operating_hours) {
@@ -108,6 +125,9 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
+    row.tabIndex = '0';     //added a tab index here so that the screen reader will verbalize 
+                            //the restaurant times for the day to the user. They can quickly toggle through them all
+                            //without having to wait for the entire schedule to be read.
 
     const day = document.createElement('td');
     day.innerHTML = key;
@@ -127,6 +147,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
+  title.tabIndex = '0';
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
@@ -148,6 +169,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  li.tabIndex = '0';    //added a tab index here so that a screen reader will verbalize the restaurant information.
   const name = document.createElement('p');
   name.innerHTML = review.name;
   li.appendChild(name);

@@ -15,7 +15,7 @@
   <header>
     <!-- Beginning nav -->
     <nav>
-      <h1><a href="/">Restaurant Reviews</a></h1>
+      <h1><a id="headertitle" tabindex="-1" href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
     <ul id="breadcrumb" >
@@ -26,19 +26,13 @@
   </header>
   <!-- End header -->
 
-  
-  
-  
-  
+    
   <!-- Beginning main -->
   <main id="maincontent">
-    <!-- Beginning map -->
-    <section id="map-container">
-      <div id="map"></div>
-    </section>
-    <!-- End map -->
+
+
     <!-- Beginning restaurant -->
-    <section id="restaurant-container">
+    <section id="restaurant-container" tabindex="0">	<!--tabindex added so that screenreaders will verbalize the information to users-->
       <h1 id="restaurant-name"></h1>
       <img id="restaurant-img">
       <p id="restaurant-cuisine"></p>
@@ -46,6 +40,15 @@
       <table id="restaurant-hours"></table>
     </section>
     <!-- end restaurant -->
+
+
+    <!-- Beginning map -->
+ <section id="map-container" tabindex="-1">
+  <div id="map" tabindex="-1"></div>          <!--tabindex="-1" is not working. The leaflet overrides it-->
+</section>
+<!-- End map -->
+
+
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <ul id="reviews-list"></ul>

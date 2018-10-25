@@ -1,6 +1,8 @@
+var staticCacheName = 'restcache-v8';
+
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('restcache-v1').then(function(cache) {
+    caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
         '/',
         'css/styles.css',
@@ -17,26 +19,34 @@ self.addEventListener('install', function(event) {
         'img/10.jpg',
         'js/dbhelper.js',
         'js/main.js',
-        'js/restaurant_info.js',
-        //not sure what to do here...
-        //'https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff',
-        //'https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff'
+        'js/restaurant_info.js'
       ]);
     })
   );
-  console.log('alksaldjfkser INSTALLED')
+  console.log('cache INSTALLED')
 });
-    
 
-/*
 self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(function)
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          return cacheName.startsWith('restcache-') &&
+                cacheName != staticCacheName;
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );  
+    })
   )
-    console.log('alksaldjfkser ACTIVATED')
-})
+});
 
-self.addEventListener('fetch', function(evt) {
-    console.log('alksaldjfkser fetched', evt.request.url);
-})
-*/
+self.addEventListener('fetch', function(event) {
+  console.log(event.request.url);
+ 
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
+    })
+  );
+ });

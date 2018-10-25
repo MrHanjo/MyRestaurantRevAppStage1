@@ -1,27 +1,23 @@
 let restaurants,
-  neighborhoods,
-  cuisines
+    neighborhoods,
+    cuisines
 var newMap
 var markers = []
 
-
-
-//SIMPLE TAB FUNCTION TO SKIP TO NEXT TAB  ********************************  HERE HERE HERE HERE HERE
-function tabSkip(event) {
-  if (event.keyCode === 9) {
+//To get the tabs to skip over the Map Container as that information is not very useful for the screen reader listener
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 9 && document.activeElement == document.getElementById('map')) {
     document.getElementById('neighborhoods-select').focus();
+  } else if (event.keyCode === 9 && event.shiftKey && document.activeElement.innerText == 'Mapbox') {
+    document.getElementById('headertitle').focus();
   }
-}
-//***************************************************************
- 
-
-
+});
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added 
+  initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -170,10 +166,13 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
-
+  li.tabIndex = '0';    //added a tabindex here so that a screen reader will verbalize the restaurant information.
+  
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  //image.tabIndex = '0';               
+  image.alt = restaurant.image_alt;   //image is described while the list item is being read.
   li.append(image);
 
   const name = document.createElement('h1');
@@ -209,46 +208,4 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     }
     self.markers.push(marker);
   });
-
 } 
-/*
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker
-    .register('/service_worker.js', { scope: '/' })
-    .then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    })
-    .catch(function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    })
-  });
-}
-*/
-//NOT SURE BUT IM ASSUMING THE REGISTRATION IS ALREADY BUILT.  
-//BUT I THOUGHT IT GOES IN THE APP OR MAIN FILE
-/* addMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
-    });
-    self.markers.push(marker);
-  });
-} */
-
-/*MODEL--------------------------
-
-registerServiceWorker = () => {
-  if (!navigator.serviceWorker) return;
-
-  navigator.serviceWorker.register('/sw.js').then(() => {
-    console.log('Service worker registered!')
-  }).catch(() => {
-    console.log('Failed to register service worker.')
-  })
-}
---------------------------------------*/
