@@ -8,6 +8,7 @@ Then open up the following URL in your internet browser:
 
 Details below.
 
+UPDATE: Added aria labels and improved the responsive design on the restaurant page.
 
 ABOUT THE CONTENT:
 This material was for an educational project at Udacity.  It simulated a task of adding Responsiveness, Accessibility and a Service Worker to a site that was lacking all of these.  

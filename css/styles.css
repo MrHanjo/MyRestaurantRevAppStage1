@@ -282,7 +282,7 @@ nav h1 a {
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
+	width: 100%;
 }
 #reviews-container h2 {
   color: #8B0000;
@@ -314,6 +314,52 @@ nav h1 a {
 }
 
 /* =================Break Points Style==================== */        
+@media screen and (min-width: 1000px) {
+  .inside #main-content {
+    display: flex;
+    flex-flow: wrap;
+}  
+#restaurant-container {
+  text-align: center;
+}
+#restaurant-img {  
+  left: 0;
+  max-width: 45%;
+  position: absolute;
+  display: block;
+  height: 500px;
+  margin-left: 30px;
+}
+#restaurant-cuisine {
+  font-size: 16pt;
+  margin-right: 30px;
+  right: 0;
+  width: 50%;
+  position: absolute;  
+}
+#restaurant-address {
+  margin-top: 90px;
+  right: 0;
+  width: 50%;
+  position: absolute;
+  font-size: 16pt;
+  text-align: center;
+}
+#restaurant-hours {
+  margin-top: 150px;
+  right: 0;
+  width: 50%;
+  position: absolute;
+  text-align: center;
+}
+#restaurant-hours td {
+  font-size: 14pt;
+}
+.inside #map {
+  margin-top: 500px;
+}
+
+
 @media screen and (max-width: 600px) {
   nav h1 a {      
     font-size: 14pt;

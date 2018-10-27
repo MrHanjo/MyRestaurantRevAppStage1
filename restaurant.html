@@ -18,7 +18,7 @@
       <h1><a id="headertitle" tabindex="-1" href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" >
+    <ul id="breadcrumb" role="navigation" aria-label="navigation bar">
       <li><a href="/">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
@@ -33,7 +33,7 @@
 
     <!-- Beginning restaurant -->
     <section id="restaurant-container" tabindex="0">	<!--tabindex added so that screenreaders will verbalize the information to users-->
-      <h1 id="restaurant-name"></h1>
+      <h2 id="restaurant-name"></h2>
       <img id="restaurant-img">
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address"></p>
@@ -44,7 +44,7 @@
 
     <!-- Beginning map -->
  <section id="map-container" tabindex="-1">
-  <div id="map" tabindex="-1"></div>          <!--tabindex="-1" is not working. The leaflet overrides it-->
+  <div id="map" role="application" aria-label="location map" tabindex="-1"></div>          <!--tabindex="-1" is not working. The leaflet overrides it-->
 </section>
 <!-- End map -->
 
